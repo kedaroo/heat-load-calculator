@@ -4,8 +4,10 @@ import './App.css';
 
 const formReducer = (state, action) => {
   switch (action.type) {
-    case 'floorArea':
-      return { ...state, floorArea: action.payload.floorArea }
+    case 'floorLength':
+      return { ...state, floorLength: action.payload.floorLength }
+    case 'floorWidth':
+      return { ...state, floorWidth: action.payload.floorWidth }
     case 'ceilingHeight':
       return { ...state, ceilingHeight: action.payload.ceilingHeight }
     case 'wallLayers':
@@ -26,7 +28,8 @@ const formReducer = (state, action) => {
 }
 
 let initalState = {
-  floorArea: '',
+  floorLength: '',
+  floorWidth: '',
   ceilingHeight: '',
   wallLayers: {},
   windowArea: '',
@@ -40,7 +43,7 @@ export default function App() {
 
   const [state, dispatch] = useReducer(formReducer, initalState)
   
-  const [newLayer, setNewLayer] = useState('')
+  const [newLayer, setNewLayer] = useState('8.66')
   const [newThickness, setNewThickness] = useState('')
   const [wall, setWall] = useState({})
 
@@ -60,17 +63,48 @@ export default function App() {
     dispatch({ type: 'wallLayers', payload: { wallLayers: wall }})
   }, [wall])
 
+  const wallHeatLoad = () => {
+    let result = 0
+    for (const key in state.wallLayers) {
+      result += Number(state.wallLayers[key])/Number(key)
+    }
+    result = result + (1 / (Number(state.insideTemp) + 273)) + (1 / (Number(state.outsideTemp) + 273))
+    result = 1 / result
+    const heatLoad = result * ((2 * state.ceilingHeight * state.floorLength) + (2 * state.ceilingHeight * state.floorWidth)) * (state.outsideTemp - state.insideTemp)
+    console.log(heatLoad)
+  }
+
+  const glassHeatLoad = () => {
+    let result = 0
+    for (const key in state.wallLayers) {
+      result += Number(state.wallLayers[key])/Number(key)
+    }
+    result = result + (1 / (Number(state.insideTemp) + 273)) + (1 / (Number(state.outsideTemp) + 273))
+    result = 1 / result
+    const heatLoad = result * ((2 * state.ceilingHeight * state.floorLength) + (2 * state.ceilingHeight * state.floorWidth)) * (state.outsideTemp - state.insideTemp)
+    console.log(heatLoad)
+  }
 
   return (
     <div className="App">
       <h1>Heat load calculator</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          <span>floor area:</span>
+          <span>floor length:</span>
           <input 
             type='number'
-            onChange={e => dispatch({ type: 'floorArea', payload: { floorArea: e.target.value }})}
-            value={state.floorArea}
+            onChange={e => dispatch({ type: 'floorLength', payload: { floorLength: e.target.value }})}
+            value={state.floorLength}
+            required
+          />
+        </label>
+
+        <label>
+          <span>floor width:</span>
+          <input 
+            type='number'
+            onChange={e => dispatch({ type: 'floorWidth', payload: { floorWidth: e.target.value }})}
+            value={state.floorWidth}
             required
           />
         </label>
@@ -92,7 +126,7 @@ export default function App() {
             value={newLayer}
             required
           >
-            <option value='8.66' selected>Brick</option>
+            <option value='8.66'>Brick</option>
             <option value='1.73'>Concrete</option>
             <option value='8.65'>Plaster</option>
             <option value='0.154'>asbestos</option>
@@ -157,6 +191,8 @@ export default function App() {
         </label>
         <button>submit</button>
       </form>
+
+      <button onClick={wallHeatLoad}>click me</button>
     </div>
   )
 }
