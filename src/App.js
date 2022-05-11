@@ -63,6 +63,26 @@ export default function App() {
     dispatch({ type: 'wallLayers', payload: { wallLayers: wall }})
   }, [wall])
 
+  const handleClickMe = () => {
+    console.log(`Total tonnage required: ${calculateTonnage()} TR`)
+  }
+
+  const calculateTonnage = () => {
+    return (grandTotalHeatLoad() / 3.51) / 1000
+  }
+
+  const totalSensibleHeat = () => {
+    return wallHeatLoad() + glassHeatLoad() + occupantHeatLoad()
+  }
+
+  const totalLatentHeat = () => {
+    return occupantLatentHeatLoad()
+  }
+
+  const grandTotalHeatLoad = () => {
+    return totalSensibleHeat() + totalLatentHeat()
+  }
+
   const wallHeatLoad = () => {
     let result = 0
     for (const key in state.wallLayers) {
@@ -71,18 +91,24 @@ export default function App() {
     result = result + (1 / (Number(state.insideTemp) + 273)) + (1 / (Number(state.outsideTemp) + 273))
     result = 1 / result
     const heatLoad = result * ((2 * state.ceilingHeight * state.floorLength) + (2 * state.ceilingHeight * state.floorWidth)) * (state.outsideTemp - state.insideTemp)
-    console.log(heatLoad)
+    return heatLoad
   }
 
   const glassHeatLoad = () => {
-    let result = 0
-    for (const key in state.wallLayers) {
-      result += Number(state.wallLayers[key])/Number(key)
-    }
-    result = result + (1 / (Number(state.insideTemp) + 273)) + (1 / (Number(state.outsideTemp) + 273))
+    let result = (0.01/0.7) + (1 / (Number(state.insideTemp) + 273)) + (1 / (Number(state.outsideTemp) + 273))
     result = 1 / result
-    const heatLoad = result * ((2 * state.ceilingHeight * state.floorLength) + (2 * state.ceilingHeight * state.floorWidth)) * (state.outsideTemp - state.insideTemp)
-    console.log(heatLoad)
+    const heatLoad = result * (state.windowArea * state.windowQty) * (state.outsideTemp - state.insideTemp) * (1.2)
+    return heatLoad
+  }
+
+  const occupantHeatLoad = () => {
+    const heatLoad = state.occupantQty * 155
+    return heatLoad
+  }
+
+  const occupantLatentHeatLoad = () => {
+    const heatLoad = state.occupantQty * 72
+    return heatLoad
   }
 
   return (
@@ -192,7 +218,7 @@ export default function App() {
         <button>submit</button>
       </form>
 
-      <button onClick={wallHeatLoad}>click me</button>
+      <button onClick={handleClickMe}>click me</button>
     </div>
   )
 }
