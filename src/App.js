@@ -2,6 +2,7 @@ import { useReducer, useState, useEffect } from "react";
 
 import "./App.css";
 import Footer from "./components/Footer";
+import Modal from "./components/Modal";
 
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -46,6 +47,7 @@ export default function App() {
   const [newLayer, setNewLayer] = useState("8.66");
   const [newThickness, setNewThickness] = useState("");
   const [wall, setWall] = useState({});
+  const [showModal, setShowModal] = useState(true);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -122,9 +124,16 @@ export default function App() {
     return heatLoad;
   };
 
+  const handleModal = () => {
+    setShowModal((prevState) => !prevState);
+  };
+
   return (
     <div className="App">
-      <header>Heat Load Calculator</header>
+      <header>
+        <button onClick={handleModal}>How to use?</button>
+        <p className="title">Heat Load Calculator</p>
+      </header>
       <main>
         <form onSubmit={handleSubmit}>
           <label>
@@ -281,6 +290,30 @@ export default function App() {
           <button className="btn-calculate">Calculate</button>
         </form>
       </main>
+
+      {showModal && (
+        <Modal>
+          <h2 style={{ textAlign: "center" }}>
+            How to use Head Load Calculator
+          </h2>
+          <ol>
+            <li>
+              For each input (e.g. floor length), enter a numeric value in
+              meters.
+            </li>
+            <li>
+              For defining wall layers, select a layer type (e.g. Concrete), and
+              define its thickness in meters and click 'Add'. Multiple wall
+              layers can be added.
+            </li>
+            <li>
+              Click 'Calculate' to find out the total AC Tonnage required for
+              the specified room.
+            </li>
+          </ol>
+          <button onClick={handleModal}>Continue</button>
+        </Modal>
+      )}
 
       <Footer />
     </div>
