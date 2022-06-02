@@ -1,4 +1,4 @@
-import { useReducer, useState, useRef, useEffect } from 'react'
+import { useReducer, useState, useEffect } from 'react'
 
 import './App.css';
 
@@ -49,6 +49,7 @@ export default function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    console.log(`Total tonnage required: ${calculateTonnage()} TR`)
     console.log(state)
   }
 
@@ -62,10 +63,6 @@ export default function App() {
   useEffect(() => {
     dispatch({ type: 'wallLayers', payload: { wallLayers: wall }})
   }, [wall])
-
-  const handleClickMe = () => {
-    console.log(`Total tonnage required: ${calculateTonnage()} TR`)
-  }
 
   const calculateTonnage = () => {
     return (grandTotalHeatLoad() / 3.51) / 1000
@@ -113,40 +110,43 @@ export default function App() {
 
   return (
     <div className="App">
-      <h1>Heat load calculator</h1>
+      <header>Heat Load Calculator</header>
       <form onSubmit={handleSubmit}>
         <label>
-          <span>floor length:</span>
+          <span>Floor Length:</span>
           <input 
             type='number'
             onChange={e => dispatch({ type: 'floorLength', payload: { floorLength: e.target.value }})}
             value={state.floorLength}
+            placeholder='E.g. 20'
             required
           />
         </label>
 
         <label>
-          <span>floor width:</span>
+          <span>Floor Width:</span>
           <input 
             type='number'
             onChange={e => dispatch({ type: 'floorWidth', payload: { floorWidth: e.target.value }})}
             value={state.floorWidth}
+            placeholder='E.g. 40'
             required
           />
         </label>
 
         <label>
-          <span>ceiling height:</span>
+          <span>Ceiling Height:</span>
           <input 
             type='number'
             onChange={e => dispatch({ type: 'ceilingHeight', payload: { ceilingHeight: e.target.value }})}
             value={state.ceilingHeight}
+            placeholder='E.g. 6'
             required
           />
         </label>
 
         <label>
-          <span>wall layers:</span>
+          <span>Wall Layers:</span>
           <select
             onChange={e => setNewLayer(e.target.value)}
             value={newLayer}
@@ -161,64 +161,70 @@ export default function App() {
             type='number'
             onChange={e => setNewThickness(e.target.value)}
             value={newThickness}
+            placeholder='E.g. 0.1'
             // required
           />
-          <button onClick={handleAdd}>add</button>
+          <button onClick={handleAdd} className='btn-add'>Add</button>
         </label>
 
         <label>
-          <span>window area:</span>
+          <span>Window Area:</span>
           <input 
             type='number'
             onChange={e => dispatch({ type: 'windowArea', payload: { windowArea: e.target.value }})}
             value={state.windowArea}
+            placeholder='E.g. 1'
             required
           />
         </label>
 
         <label>
-          <span>window quantity:</span>
+          <span>Window Quantity:</span>
           <input 
             type='number'
             onChange={e => dispatch({ type: 'windowQty', payload: { windowQty: e.target.value }})}
             value={state.windowQty}
+            placeholder='E.g. 8'
             required
           />
         </label>
 
         <label>
-          <span>occupant quantity:</span>
+          <span>Occupant Quantity:</span>
           <input 
             type='number'
             onChange={e => dispatch({ type: 'occupantQty', payload: { occupantQty: e.target.value }})}
             value={state.occupantQty}
+            placeholder='E.g. 15'
             required
           />
         </label>
 
         <label>
-          <span>outside temperature:</span>
+          <span>Outside Temperature:</span>
           <input 
             type='number'
             onChange={e => dispatch({ type: 'outsideTemp', payload: { outsideTemp: e.target.value }})}
             value={state.outsideTemp}
+            placeholder='E.g. 35'
             required
           />
         </label>
 
         <label>
-          <span>inside temperature:</span>
+          <span>Inside Temperature:</span>
           <input 
             type='number'
             onChange={e => dispatch({ type: 'insideTemp', payload: { insideTemp: e.target.value }})}
             value={state.insideTemp}
+            placeholder='E.g. 22'
             required
           />
         </label>
-        <button>submit</button>
+        <button className='btn-calculate'>Calculate</button>
       </form>
 
-      <button onClick={handleClickMe}>click me</button>
+      
     </div>
   )
 }

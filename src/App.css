@@ -1,9 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
 body {
-  padding: 1rem;
+  font-family: 'Poppins', sans-serif;
 }
 
-.App input {
+header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  text-align: center;
+  padding: 1rem;
+  background-color: #fff;
+  border-bottom: 2px rgb(131, 131, 131) solid;
+  font-size: 1.5rem;
+}
+
+form {
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  font: inherit;
+}
+
+select {
+  font: inherit;
   margin-left: 1rem;
+  padding: 0.5rem;
+}
+
+button {
+  font: inherit;
+  padding: 0.25rem 0.75rem;
+  color:#fff;
+  background-color: #2563eb;
+  border: 1px solid #2563eb;
+  border-radius: 0.25rem;
+}
+
+.btn-add {
+  margin-top: 0.75rem;
+}
+
+.btn-calculate {
+  padding: 0.25rem 1rem;
+  display: block;
+  margin: 0 auto;
 }
 
 .App label {
