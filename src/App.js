@@ -48,11 +48,13 @@ export default function App() {
   const [newThickness, setNewThickness] = useState("");
   const [wall, setWall] = useState({});
   const [showModal, setShowModal] = useState(true);
+  const [tonnage, setTonnage] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`Total tonnage required: ${calculateTonnage()} TR`);
-    console.log(state);
+    calculateTonnage();
+    // console.log(`Total tonnage required: ${calculateTonnage()} TR`);
+    // console.log(state);
   };
 
   const handleAdd = (e) => {
@@ -67,7 +69,8 @@ export default function App() {
   }, [wall]);
 
   const calculateTonnage = () => {
-    return grandTotalHeatLoad() / 3.51 / 1000;
+    setTonnage(Math.ceil(grandTotalHeatLoad() / 3.51 / 1000));
+    // return grandTotalHeatLoad() / 3.51 / 1000;
   };
 
   const totalSensibleHeat = () => {
@@ -126,6 +129,7 @@ export default function App() {
 
   const handleModal = () => {
     setShowModal((prevState) => !prevState);
+    setTonnage(null);
   };
 
   return (
@@ -311,6 +315,14 @@ export default function App() {
               the specified room.
             </li>
           </ol>
+          <button onClick={handleModal}>Continue</button>
+        </Modal>
+      )}
+
+      {tonnage && (
+        <Modal>
+          <h2 style={{ textAlign: "center" }}>Total AC Tonnage Required</h2>
+          <h3 style={{ textAlign: "center" }}>{tonnage} TR</h3>
           <button onClick={handleModal}>Continue</button>
         </Modal>
       )}
