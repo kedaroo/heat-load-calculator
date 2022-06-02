@@ -1,5 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
+/* following style will be applied to every element */
+*, *::before, *::after{
+  /* margin: 0;
+  padding: 0; */
+  box-sizing: border-box; 
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  min-height: 100vh; 
+  text-align: center;
+}
+
+main {
+  width: 100%;
+  flex-grow: 1;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
 }
@@ -50,7 +71,7 @@ button {
 .btn-calculate {
   padding: 0.25rem 1rem;
   display: block;
-  margin: 0 auto;
+  margin: 1rem auto;
 }
 
 .App label {
