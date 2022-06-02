@@ -4,8 +4,8 @@ export default function Footer() {
     return (
         <footer>
             <div className="container-footer">
-                <p className="text-center">stay connected!</p>
-                <ul className="socials-list">
+                <p className="text-center">Made by ♥ in VIT</p>
+                {/* <ul className="socials-list">
                     <li className="socials-list-item">
                         <a href="https://twitter.com/KedarBasutkar" target="_blank">
                             <i className="fa-brands fa-twitter social-icon"></i>
@@ -21,12 +21,12 @@ export default function Footer() {
                             <i className="fa-brands fa-linkedin-in social-icon"></i>
                         </a>
                     </li>
-                </ul>
+                </ul> */}
                 <div className="footer-list">
-                    <p className="footer-name">
+                    {/* <p className="footer-name">
                         <a href="index.html">kedar basutkar</a>
-                    </p>
-                    <p className="copyright-text">© 2022 kedar basutkar. all rights reserved</p>
+                    </p> */}
+                    <p className="copyright-text">© 2022 GCOF. all rights reserved</p>
                 </div>
                 <table>
                     <tr>
