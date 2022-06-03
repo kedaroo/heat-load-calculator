@@ -139,8 +139,8 @@ export default function App() {
         <p className="title">Heat Load Calculator</p>
       </header>
       <main>
-        <p>Note: Length is in meters and temperature in ºC</p>
         <form onSubmit={handleSubmit}>
+          <p>Note: Length is in meters and temperature in ºC</p>
           <label>
             <span>Floor Length:</span>
             <input
