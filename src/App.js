@@ -302,8 +302,8 @@ export default function App() {
           </h2>
           <ol>
             <li>
-              For each input (e.g. floor length), enter a numeric value in
-              meters.
+              For each input (e.g. floor length), enter a numeric value{" "}
+              <strong>in meters.</strong>
             </li>
             <li>
               For defining wall layers, select a layer type (e.g. Concrete), and
