@@ -4,7 +4,7 @@ export default function Footer() {
     return (
         <footer>
             <div className="container-footer">
-                <p className="text-center">Made by ♥ in VIT</p>
+                <p className="text-center">Made with ♥ in VIT</p>
                 {/* <ul className="socials-list">
                     <li className="socials-list-item">
                         <a href="https://twitter.com/KedarBasutkar" target="_blank">
