@@ -196,10 +196,10 @@ export default function App() {
               value={newLayer}
               required
             >
-              <option value="8.66">Brick</option>
-              <option value="1.73">Concrete</option>
+              <option value="15.93">Brick</option>
+              <option value="20">Concrete</option>
               <option value="8.65">Plaster</option>
-              <option value="0.154">asbestos</option>
+              <option value="4.71">asbestos</option>
             </select>
             <input
               type="number"
